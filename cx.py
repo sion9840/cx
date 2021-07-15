@@ -23,12 +23,37 @@ dayCount = len(infectionCount)
 
 print(infectionCount)
 
-years, values = [], []
+years1, values1 = [], []
 for i in infectionCount:
-    years.append(i[0])
-    values.append(i[1])
+    years1.append(i[0])
+    values1.append(i[1])
 
-plt.bar(range(dayCount), values, color = 'r')
-plt.plot(range(dayCount), values, marker = 'o', color = 'b')
-plt.xticks(range(dayCount), years)
+plt.subplot(1, 2, 1)
+plt.title('State')
+plt.xlabel('date')
+plt.ylabel('infection count')
+plt.bar(range(dayCount), values1, color = 'r')
+plt.plot(range(dayCount), values1, marker = 'o', color = 'b')
+plt.xticks(range(dayCount), years1, rotation=45)
+
+years1 = [years1[0]] + years1
+values1 = [values1[0]] + values1
+
+values2 = []
+years2 = []
+values2_max = 0
+for i in range(dayCount):
+    if values2_max < (values1[i+1] - values1[i]):
+        values2_max = values1[i+1] - values1[i]
+        values2.append(values2_max)
+        years2.append(years1[i+1])
+
+plt.subplot(1, 2, 2)
+plt.title('State Increase')
+plt.xlabel('date')
+plt.ylabel('infection increase')
+plt.plot(range(len(values2)), values2, marker = 'o', color = 'g')
+plt.xticks(range(len(values2)), years2, rotation=45)
+
+plt.suptitle('CX')
 plt.show()
